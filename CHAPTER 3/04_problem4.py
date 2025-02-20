@@ -1,3 +1,3 @@
 text ="Ami  je tomar  !"
 text = text.replace("  ", " ")
-print(text)
+print(text) #strings are immutable
