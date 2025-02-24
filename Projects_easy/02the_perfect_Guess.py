@@ -11,11 +11,15 @@ while (c_guess != my_guess):
     my_guess = int(input("Enter your guess: "))
     if (c_guess == my_guess):
         print("Oh you guessed it right!")
+    elif my_guess == "":
+        print("Input cannot be empty. Please enter a valid guess.")
+        continue
+
     else:
         if(c_guess > my_guess):
-            print("Lower guess please?")
-        else:
             print("Higher guess please?")
+        else:
+            print("lower guess please?")
 
 print("You have guessed the number correctly in {} attempts ".format(total_guesses))
         
