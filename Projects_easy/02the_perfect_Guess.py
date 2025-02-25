@@ -21,6 +21,6 @@ while (c_guess != my_guess):
         else:
             print("lower guess please?")
 
-print("You have guessed the number correctly in {} attempts ".format(total_guesses))
+print(f"You have guessed the number correctly in {total_guesses} attempts ")
         
     
