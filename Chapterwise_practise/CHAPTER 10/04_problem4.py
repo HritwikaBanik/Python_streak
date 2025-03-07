@@ -14,6 +14,9 @@ class Calculator:
     def squareroot(self):
         return self.number**(1/2)
     
+    #No self or cls parameter: Static methods don't take self (instance reference) or cls (class reference) as the first argument. They just 
+    #   work with the arguments passed to them.
+    #Use case: Static methods are useful when the method doesn't need to access or modify class or instance attributes.
     @staticmethod
     def hello():
         print("Hello buddy!")
