@@ -1,34 +1,36 @@
 import pandas as pd
 
+# Load the Excel file
 file_path = r'C:\Users\91600\Documents\GitHub\Python_streak\xlsv to csv\Infy Jan 1 to March 03 performance.xlsx'
-
 df = pd.read_excel(file_path)
-df.to_csv('Jan1_to_March03_Performance.csv', index=False)
 
-o = pd.read_csv('Jan1_to_March03_Performance.csv')
+# Convert 'Entry Time' and 'Exit Time' to datetime
+df['Entry Time'] = pd.to_datetime(df['Entry Time'])
+df['Exit Time'] = pd.to_datetime(df['Exit Time'])
 
-# Convert 'start_time' and 'end_time' columns to datetime
-o['Entry Time'] = pd.to_datetime(o['Entry Time'])
-o['Exit Time'] = pd.to_datetime(o['Exit Time'])
+# Ensure data is sorted by Entry Time
+df = df.sort_values(by='Entry Time')
 
+print(f"Original Dataset: {df.shape}")
 
-# This will be True for the rows where the exit time is the next day
-o['is_next_day'] = (o['Exit Time'].dt.date > o['Entry Time'].dt.date) &  \
-                   (o['Exit Time'].dt.date - o['Entry Time'].dt.date == pd.Timedelta(days=1))
+# Remove trades where Exit Time is on the next day
+df = df[df['Exit Time'].dt.date == df['Entry Time'].dt.date]
 
-# Removed the rows where 'is_next_day' is True
-o = o[~o['is_next_day']]
+# List to store filtered trades
+filtered_trades = []
+last_exit_time = None
 
-# Dropped the 'is_next_day' column as it's no longer needed
-o = o.drop(columns=['is_next_day'])
+# Iterate over trades to remove concurrent trades
+for index, row in df.iterrows():
+    if last_exit_time is None or row['Entry Time'] >= last_exit_time:
+        filtered_trades.append(row)
+        last_exit_time = row['Exit Time']
+
+# Convert back to DataFrame
+filtered_df = pd.DataFrame(filtered_trades)
 
 # Save the modified DataFrame back to CSV
-o.to_csv('modified_file.csv', index=False)
+filtered_df.to_csv('modified_file.csv', index=False)
 
-print("Records with 'Exit Time' being the next day of 'Entry Time' have been deleted.")
-
-
-print(df)
-print(o)
-print(df.shape)  #(rows, columns)
-print(o.shape)
+print("Concurrent and next-day trades have been removed.")
+print(f"Original trades on the same day: {df.shape}, Filtered trades(without concurrency): {filtered_df.shape}")
