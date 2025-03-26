@@ -1,0 +1,42 @@
+Column Descriptions
+Entry Time & Entry Date: The timestamp and date when the trade was initiated.
+
+Entry Price: The price at which the trade was entered.
+
+Direction: Whether the trade was a "Long" (buy) or "Short" (sell) position.
+
+Stop Loss: The predefined price level to limit losses.
+
+Target: The price target for profit-taking.
+
+Risk (points): The difference between the entry price and the stop-loss price.
+
+Risk-Reward: The ratio of potential profit to risk.
+
+Signal Candle Time: The time when the trade signal was generated.
+
+Status: Indicates if the trade was "Closed" or still active.
+
+Exit Time: The timestamp when the trade was closed.
+
+Exit Price: The price at which the trade was exited.
+
+Result: Indicates whether the trade hit "Target," "Stop Loss," or was "Day Close."
+
+Duration: How long the trade remained open.
+
+Profit/Loss: The actual gain or loss from the trade.
+
+Entry Month: Helps in analyzing monthly performance trends.
+
+
+
+code solution :
+✔ Removes next-day trades first.
+✔ Removes concurrent trades only after filtering next-day exits.
+✔ Avoids unnecessary filtering steps.
+
+Implementation :
+Sorts trades by Entry Time before processing.
+Iterates through each trade, keeping only those where a trade starts after the previous one has closed.
+Removes overlapping (concurrent) trades while preserving the first valid trade.

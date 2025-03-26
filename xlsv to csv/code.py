@@ -9,7 +9,7 @@ df['Entry Time'] = pd.to_datetime(df['Entry Time'])
 df['Exit Time'] = pd.to_datetime(df['Exit Time'])
 
 # Ensure data is sorted by Entry Time
-df = df.sort_values(by='Entry Time')
+#df = df.sort_values(by='Entry Time')
 
 print(f"Original Dataset: {df.shape}")
 
